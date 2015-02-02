@@ -88,6 +88,15 @@ Node::Node(const Node &other): expr(other.expr), t(other.t)
     }
 }
 
+Node::~Node()
+{
+    if(t == LIST)
+    {
+        for(auto i = data.list.begin(); i !- data.list.end(); i++)
+            delete *i;
+    }
+}
+
 const char * const Node::getChar() const
 {
     if(t == CHAR)
@@ -110,4 +119,28 @@ const vector<const Node *> * const getList() const
         return &data.list;
     else
         return NULL;
+}
+
+const string Node::toString() const
+{
+    ostringstream ret("");
+    switch(t)
+    {
+    case CHAR:
+        ret<<data.c;
+        break;
+    case INT:
+        ret<<data.i;
+        break;
+    case LIST:
+        if(expr)
+            ret<<"\'";
+        ret<<"(";
+        for(auto i = data.list.begin(); i != data.list.end(); i++)
+            ret<<(*i)->toString()<<' ';
+        ret<<")";
+        break;
+    }
+    
+    return ret;
 }

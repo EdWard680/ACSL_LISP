@@ -14,10 +14,6 @@ using std::ostringstream;
 using std::stringstream;
 using std::invlaid_argument;
 
-class Atom
-{
-};
-
 class Node
 {
 public:
