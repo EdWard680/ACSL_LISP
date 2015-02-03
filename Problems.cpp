@@ -76,10 +76,63 @@ const string compressDuplicatesOnly(const string &in)
 
 const string shrink(const string &in)
 {
-    return "";
+	Node parsed(in);
+    if(!parsed.isExpr())
+        throw invalid_argument(string("compress(s=\"")+in+"\"): not a LISP expressin");
+    
+    auto primaryList = *parsed.getList();
+	
+	if(primaryList.back()->getType() != Node::INT)
+	{
+		throw invalid_argument(string("compress(s=\"")+in+"\"): last element \""+primaryList.back()->toString()+"\" is not a number");
+	}
+	
+	const int n = *primaryList.back()->getInt();
+	
+	vector<const Node *> shrunkList;
+	for(int i = 1; i <= primaryList.size(); i++)
+	{
+		if(i % n)
+			shrunkList.push_back(new Node(*primaryList[i-1]));
+	}
+	
+	Node shrunk(shrunkList, true);
+	
+    return shrunk;
 }
 
 const string split(const string &in)
 {
-    return "";
+	Node parsed(in);
+    if(!parsed.isExpr())
+        throw invalid_argument(string("compress(s=\"")+in+"\"): not a LISP expressin");
+    
+    auto primaryList = *parsed.getList();
+	
+	if(primaryList.back()->getType() != Node::INT)
+	{
+		throw invalid_argument(string("compress(s=\"")+in+"\"): last element \""+primaryList.back()->toString()+"\" is not a number");
+	}
+	
+	const int n = *primaryList.back()->getInt();
+	
+	vector<const Node *> headList, tailList;
+	for(int i = 0; i < n; i++)
+	{
+		headList.push_back(new Node(*primaryList[i]));
+	}
+	
+	for(int i = n; i < primaryList.size(); i++)
+	{
+		tailList.push_back(new Node(*primaryList[i]));
+	}
+	
+	Node head(headList, true), tail(tailList, true);
+	
+    return head.toString()+' '+tail.toString();
 }
+
+
+
+
+

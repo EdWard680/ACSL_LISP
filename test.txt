@@ -1,0 +1,5 @@
+'(A B C D)
+'(A A A A B C C A A D E E E E)
+'(A A A A B C C A A D E E E E)
+'((4 A) (1 B) (2 C) (2 A) (1 D) (4 E) 2)
+'((4 A) (1 B) (2 C) (2 A) (1 D) (4 E) 3)
