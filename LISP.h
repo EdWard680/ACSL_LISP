@@ -12,7 +12,7 @@ using std::vector;
 using std::istringstream;
 using std::ostringstream;
 using std::stringstream;
-using std::invlaid_argument;
+using std::invalid_argument;
 
 class Node
 {
@@ -27,14 +27,14 @@ private:
     {
         char c;
         unsigned short i;
-        vector<const Node *> list;
+        vector<const Node *> *list;
     } data;
     
 public:
     Node(const string& s);
     Node(const char c);
     Node(const unsigned short i);
-    Node(const vector<const Node *> l);
+    Node(const vector<const Node *> &l, const bool e=false);
     Node(const Node& other);
     virtual ~Node();
     
@@ -48,7 +48,9 @@ public:
 public:
     const string toString() const;
     operator const string() const {return toString();};
+    const bool operator== (const Node& other) const;
+    const bool operator!= (const Node& other) const {return !(*this == other);};
 };
 
 
-#endif _LISP_H_
+#endif /*_LISP_H_*/
